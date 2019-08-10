@@ -196,3 +196,21 @@ vim server.ts
 ```sh
 yarn add axios basic-auth bcryptjs jsonwebtoken koa-bodyparser koa-router lodash mysql2 npm-check require-directory sequelize validator
 ```
+
+## 全局异常处理
+
+```js
+console.log(1/0) // Infinity
+console.log(0/0) // NaN
+```
+
+[从一张搞笑图看JavaScript的语法和特性](https://blog.kaaass.net/archives/929?hmsr=toutiao.io&utm_medium=toutiao.io&utm_source=toutiao.io)
+
+### `try catch` 对于异步编程很难捕获
+
+- 回调
+- Promise
+- async/await
+
+- AOP 面向切面编程
+

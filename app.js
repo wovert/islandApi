@@ -1,10 +1,12 @@
 const Koa = require('koa')
 const parser = require('koa-bodyparser')
 const InitMananger = require('./core/init')
+const catchError = require('./middlewares/exception')
 
 const port = 3000
 const app = new Koa()
 
+app.use(catchError)
 app.use(parser())
 InitMananger.initCore(app)
 

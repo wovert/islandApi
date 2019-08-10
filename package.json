@@ -4,7 +4,7 @@
   "description": "- Python Flask/Django(同步编程)\r - Java SpringBoot(同步编程)\r - NodeJS Koa(异步编程)",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/app.js"
+    "start": "nodemon app.js"
   },
   "keywords": [],
   "author": "",
