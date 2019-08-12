@@ -8,8 +8,17 @@ const sequelize = new Sequelize(dbName, user, password, {
   logging: true, // 显示原型数据库
   timezone: '+08:00', // 时区设置
   define: {
-
+    timestamps: true, // 是否添加 createAt, updatedAt 时间字段
+    paranoid: true, // deleteAt
+    createdAt: 'crated_at',
+    updatedAt: 'updated_at',
+    deletedAt: 'deleted_at',
+    underscored: true // 数据库名是否
   }
+})
+
+sequelize.sync({
+  force: true // 是否强制更新字段
 })
 
 module.exports = {

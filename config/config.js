@@ -5,6 +5,6 @@ module.exports = {
     host: '192.168.1.2',
     port: 3306,
     user: 'root',
-    password: '123654789'
+    password: '123456789'
   }
 }

@@ -4,9 +4,12 @@ const catchError = async (ctx, next) => {
   try {
     await next()
   } catch (error) {
+    
+    const isHttpException = error instanceof HttpException
+    const isDev = process.env.NODE_ENV === 'dev' || global.config.environment === 'dev'
+
     // 开发环境
-    // if (global.config.environment === 'dev') {
-    if (process.env.NODE_ENV === 'dev') {
+    if (isDev && !isHttpException) {
       throw error
     }
 
