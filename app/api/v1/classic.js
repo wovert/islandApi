@@ -8,7 +8,7 @@ router.post('/v1/:id/classic/latest', (ctx, next) => {
   // body
   const path = ctx.params
   const query = ctx.request.query
-  const headers = ctx.request.header
+  const header = ctx.request.header
   const body = ctx.request.body
   
   // abc
@@ -16,6 +16,8 @@ router.post('/v1/:id/classic/latest', (ctx, next) => {
   // const v = new PositiveIntegerValidator()
   // v.validate(ctx)
   const v = new PositiveIntegerValidator().validate(ctx)
+  const id = v.get('path.id', parsed=false)
+  const x = v.get('body.b.e.x', parsed=false)
 
   // if (true) {
   //   // const error = new Error('为什么错误')
