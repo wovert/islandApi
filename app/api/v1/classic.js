@@ -1,9 +1,13 @@
 const Router = require('koa-router')
-const router = Router()
+const router = Router({
+  prefix: '/v1/classic'
+})
 // const { ParameterException } = require('../../../core/http-exception')
 const { PositiveIntegerValidator } = require('../../validators/validator')
+const { Auth } = require('../../../middlewares/auth')
 
-router.post('/v1/:id/classic/latest', async (ctx, next) => {
+
+router.get('/latest', new Auth().m, async (ctx, next) => {
   // header
   // body
   const path = ctx.params
@@ -14,7 +18,7 @@ router.post('/v1/:id/classic/latest', async (ctx, next) => {
   // abc
 
   const v = await new PositiveIntegerValidator().validate(ctx)
-  const id = v.get('path.id', parsed=false)
+  // const id = v.get('path.id', parsed=false)
   const x = v.get('body.b.e.x', parsed=false)
 
   // if (true) {

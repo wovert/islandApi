@@ -31,21 +31,21 @@ const findMembers = function(instance, { prefix, specifiedType, filter }) {
   return _find(instance);
 };
 
+// 生成令牌
 const generateToken = function(uid, scope) {
-  const secretKey = global.config.security.secretKey;
-  const expiresIn = global.config.security.expiresIn;
+  const secretKey = global.config.security.secretKey
+  const expiresIn = global.config.security.expiresIn
   const token = jwt.sign(
     {
-      uid,
-      scope
+      uid, scope // 存入数据
     },
     secretKey,
     {
       expiresIn
     }
   );
-  return token;
-};
+  return token
+}
 
 module.exports = {
   findMembers,
