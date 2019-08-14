@@ -4,8 +4,8 @@ const { User } = require('../models/user')
 const { generateToken } = require('../../core/util')
 const { Auth } = require('../../middlewares/auth')
 
-class WxManager {
-  static async codeToToken(code) {
+class WxService {
+  static async getToken(code) {
     // 小程序登录：code 小程序登录 微信
     // openid 小程序的用户唯一标识
 
@@ -39,5 +39,5 @@ class WxManager {
 }
 
 module.exports = {
-  WxManager
+  WxService
 }

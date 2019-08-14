@@ -32,6 +32,11 @@ class TokenValidator extends LinValidator {
     if (!LoginType.isThisType(type)) {
       throw new Error('type参数不合法')     
     }
+
+    // 邮箱登录用户必须输入密码
+    if (LoginType.USER_EMAIL === type && !vals.body.secret) {
+      throw new Error('密码至少输入6个字符')
+    }
   }
 }
 
