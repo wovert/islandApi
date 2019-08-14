@@ -18,7 +18,7 @@ const sequelize = new Sequelize(dbName, user, password, {
 })
 
 sequelize.sync({
-  force: true // 是否强制更新字段
+  force: false // 是否强制清空数据
 })
 
 module.exports = {

@@ -1,4 +1,39 @@
-const { LinValidator, Rule } = require('../../core/lin-validator')
+const { LinValidator, Rule } = require('../../core/lin-validator-v2')
+const { User } = require('../models/user')
+const { LoginType } = require('../lib/enum')
+
+class TokenValidator extends LinValidator {
+  constructor() {
+    super()
+    this.account = [
+      // 且关系
+      new Rule('isLength', '不符合账号规则', { min: 4, max:32 })
+    ]
+    this.secret = [
+      // 1. 可以为空 可以不穿
+      // 2. 空 不为空
+      // 传统web: account + secrent
+      // 现代: account
+      // 手机登录
+      new Rule('isOptional'),
+      new Rule('isLength', '至少6个字符', {
+        min: 6,
+        max: 128
+      })
+    ]
+  }
+
+  validateLoginType(vals) {
+    const type = parseInt(vals.body.type)
+    if (isNaN(type) || !type) {
+      throw new Error('type是必须参数') // 登录类型参数必须传值
+    }
+
+    if (!LoginType.isThisType(type)) {
+      throw new Error('type参数不合法')     
+    }
+  }
+}
 
 class PositiveIntegerValidator extends LinValidator {
   constructor() {
@@ -41,10 +76,23 @@ class RegisterValidator extends LinValidator {
       throw new Error('两个密码必须相同')
     }
   }
+
+  async validateEmail(vals) {
+    const email = vals.body.email
+    const user = await User.findOne({
+      where: {
+        email
+      }
+    })
+    if (user) {
+      throw new Error('email已存在')
+    }
+  }
 }
 
 
 module.exports = {
   PositiveIntegerValidator,
+  TokenValidator,
   RegisterValidator
 }

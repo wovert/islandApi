@@ -214,3 +214,7 @@ console.log(0/0) // NaN
 
 - AOP 面向切面编程
 
+
+## bcryptjs
+
+[bcryptjs](https://medium.com/@paulrohan/how-bcryptjs-works-90ef4cb85bf4)
