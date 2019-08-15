@@ -30,7 +30,7 @@ router.post('/verify', async (ctx) => {
   const v = await new NotEmptyValidator().validate(ctx)
   const result = await WxService.verify(v.get('body.token'))
   ctx.body = {
-    result
+    is_valid: result
   }
 })
 

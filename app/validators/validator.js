@@ -24,19 +24,24 @@ class TokenValidator extends LinValidator {
   }
 
   validateLoginType(vals) {
-    const type = parseInt(vals.body.type)
-    if (isNaN(type) || !type) {
-      throw new Error('type是必须参数') // 登录类型参数必须传值
-    }
+    const type = vals.body.type
 
-    if (!LoginType.isThisType(type)) {
-      throw new Error('type参数不合法')     
-    }
+    checkType(type)
 
     // 邮箱登录用户必须输入密码
     if (LoginType.USER_EMAIL === type && !vals.body.secret) {
       throw new Error('密码至少输入6个字符')
     }
+  }
+}
+
+function checkType(type) {
+  if (!type) {
+    throw new Error('type是必须参数') // 登录类型参数必须传值
+  }
+
+  if (!LoginType.isThisType(type)) {
+    throw new Error('type参数不合法')     
   }
 }
 
@@ -47,6 +52,15 @@ class PositiveIntegerValidator extends LinValidator {
       // 且关系
       new Rule('isInt', '需要时正整数', { min: 1 })
     ]
+  }
+}
+
+class LikeValidator extends PositiveIntegerValidator {
+  constructor() {
+    super()
+  }
+  validateType(vals) {
+    checkType(vals.body.type)
   }
 }
 
@@ -108,6 +122,7 @@ class RegisterValidator extends LinValidator {
 module.exports = {
   PositiveIntegerValidator,
   TokenValidator,
+  LikeValidator,
   NotEmptyValidator,
   RegisterValidator
 }
