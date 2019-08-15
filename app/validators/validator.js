@@ -50,6 +50,15 @@ class PositiveIntegerValidator extends LinValidator {
   }
 }
 
+class NotEmptyValidator extends LinValidator {
+  constructor() {
+    super()
+    this.token = [
+      new Rule('isLength', '不允许为空', { min: 1 })
+    ]
+  }
+}
+
 // 注册验证器
 class RegisterValidator extends LinValidator {
   constructor() {
@@ -99,5 +108,6 @@ class RegisterValidator extends LinValidator {
 module.exports = {
   PositiveIntegerValidator,
   TokenValidator,
+  NotEmptyValidator,
   RegisterValidator
 }

@@ -214,7 +214,15 @@ console.log(0/0) // NaN
 
 - AOP 面向切面编程
 
-
 ## bcryptjs
 
 [bcryptjs](https://medium.com/@paulrohan/how-bcryptjs-works-90ef4cb85bf4)
+
+## 小程序使用npm
+
+1. 微信开发者工具: 本地设置->使用 npm 模块
+2. npm init
+3. yarn add lin-ui
+4. 微信开发者工具: 工具 -> 构建 npm
+5. 按需加载
+6. 勾选不校验合法域名、Web-view/TLS...

@@ -1,9 +1,10 @@
 const Router = require('koa-router')
-const { TokenValidator } = require('../../validators/validator')
+const { TokenValidator, NotEmptyValidator } = require('../../validators/validator')
 // const { User } = require('../../models/user')
 // const {  generateToken } = require('../../../core/util')
 // const { Auth } = require('../../../middlewares/auth')
 const { LoginService } = require('../../services/login')
+const { WxService } = require('../../services/wx')
 
 const router = Router({
   prefix: '/v1/token'
@@ -20,6 +21,16 @@ router.post('/', async (ctx) => {
   const token = await LoginService.login(params)
   ctx.body = {
     token
+  }
+})
+
+// 验证令牌
+router.post('/verify', async (ctx) => {
+  // token
+  const v = await new NotEmptyValidator().validate(ctx)
+  const result = await WxService.verify(v.get('body.token'))
+  ctx.body = {
+    result
   }
 })
 

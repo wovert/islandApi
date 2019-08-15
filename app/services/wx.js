@@ -22,9 +22,8 @@ class WxService {
       throw new global.exceptions.AuthFailed('openid获取失败')
     }
 
-    const errcode = result.data.errcode
-    if (errcode !== 0) {
-      throw new global.exceptions.AuthFailed('openid获取失败:' + errcode)
+    if (result.data.errcode) {
+      throw new global.exceptions.AuthFailed('openid获取失败:' + result.data.errmsg)
     }
 
     // openid 建立档案
@@ -35,6 +34,10 @@ class WxService {
     }
 
     return generateToken(user.id, Auth.USER)
+  }
+
+  static async verify(token) {
+    return Auth.verifyToken(token)
   }
 }
 
