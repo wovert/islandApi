@@ -10,7 +10,7 @@ const sequelize = new Sequelize(dbName, user, password, {
   define: {
     timestamps: true, // 是否添加 createAt, updatedAt 时间字段
     paranoid: true, // deleteAt
-    createdAt: 'crated_at',
+    createdAt: 'created_at',
     updatedAt: 'updated_at',
     deletedAt: 'deleted_at',
     underscored: true // 数据库名是否
