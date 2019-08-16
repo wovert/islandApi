@@ -14,10 +14,14 @@ class ClassicService {
       ]
     })
 
-    const art = await Art.getData(flow.art_id, flow.type)
+    const art = await ClassicService.getData(flow.art_id, flow.type)
     art.setDataValue('index', flow.index) // set flow.index to art object
 
     return art
+  }
+
+  static async getData(art_id, type) {
+    return await Art.getData(art_id, type)
   }
 }
 

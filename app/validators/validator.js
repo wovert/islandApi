@@ -60,8 +60,13 @@ class LikeValidator extends PositiveIntegerValidator {
     super()
   }
   validateType(vals) {
-    checkType(vals.body.type)
+    console.log(vals.path.type)
+    checkType(vals.body.type || vals.path.type)
   }
+}
+
+class ClassicValidator extends LikeValidator {
+
 }
 
 class NotEmptyValidator extends LinValidator {
@@ -124,5 +129,6 @@ module.exports = {
   TokenValidator,
   LikeValidator,
   NotEmptyValidator,
-  RegisterValidator
+  RegisterValidator,
+  ClassicValidator
 }
