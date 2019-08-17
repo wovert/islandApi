@@ -55,7 +55,7 @@ class ClassicService {
   }
 
   static async detail(id, type, uid) {
-    const artDetail = ClassicService.art(id, type, uid)
+    const artDetail = await ClassicService.art(id, type, uid)
     artDetail.art.setDataValue('like_status', artDetail.like_status)
     return artDetail.art
   }

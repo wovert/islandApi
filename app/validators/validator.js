@@ -1,6 +1,6 @@
 const { LinValidator, Rule } = require('../../core/lin-validator-v2')
 const { User } = require('../models/user')
-const { LoginType } = require('../lib/enum')
+const { LoginType, ArtType } = require('../lib/enum')
 
 class TokenValidator extends LinValidator {
   constructor() {
@@ -24,9 +24,12 @@ class TokenValidator extends LinValidator {
   }
 
   validateLoginType(vals) {
-    const type = vals.body.type
-
-    checkType(type)
+    if (!vals.body.type) {
+      throw new Error("type是必须参数");
+    }
+    if (!LoginType.isThisType(vals.body.type)) {
+      throw new Error("type参数不合法");
+    }
 
     // 邮箱登录用户必须输入密码
     if (LoginType.USER_EMAIL === type && !vals.body.secret) {
@@ -45,6 +48,18 @@ function checkType(type) {
   }
 }
 
+function checkArtType(vals) {
+  let type = vals.body.type || vals.path.type
+  if (!type) {
+    throw new Error("type是必须参数")
+  }
+  type = parseInt(type)
+
+  if (!ArtType.isThisType(type)) {
+    throw new Error("type参数不合法")
+  }
+}
+
 class PositiveIntegerValidator extends LinValidator {
   constructor() {
     super()
@@ -58,10 +73,7 @@ class PositiveIntegerValidator extends LinValidator {
 class LikeValidator extends PositiveIntegerValidator {
   constructor() {
     super()
-  }
-  validateType(vals) {
-    console.log(vals.path.type)
-    checkType(vals.body.type || vals.path.type)
+    this.validateType = checkArtType
   }
 }
 

@@ -4,6 +4,11 @@ const { Op } = require("sequelize")
 const { Movie, Music, Sentence } = require('./classic')
 
 class Art {
+  constructor(art_id, type) {
+    this.art_id = art_id
+    this.type = type
+  }
+
   async getDetail(uid) {
     const { Favor } = require("./favor")
     const art = await Art.getData(this.art_id, this.type)
@@ -26,7 +31,7 @@ class Art {
         id: art_id
       }
     }
-    switch (type) {
+    switch (parseInt(type)) {
       case 100:
         art = Movie.findOne(finder)
         break
