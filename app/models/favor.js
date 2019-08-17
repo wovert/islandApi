@@ -1,4 +1,4 @@
-const { Sequelize, Model } = require('sequelize')
+const { Sequelize, Model, Op } = require('sequelize')
 const { sequelize } = require('../../core/db')
 const { Art } = require('./art')
 
@@ -54,6 +54,33 @@ class Favor extends Model {
       await art.decrement('fav_nums', {by: 1, transaction: t}) // 减一
     })
   }
+
+  static async userLikeIt(art_id, type, uid) {
+    const favor = await Favor.findOne({
+      where: {
+        uid,
+        art_id,
+        type
+      }
+    })
+    return favor ? true : false
+  }
+
+  static async getMyClassicFavors(uid) {
+    const arts = await Favor.findAll({
+      where: {
+        uid,
+        type:{
+          [Op.not]: 400,
+        }
+      }
+    })
+    if(!arts) {
+      throw new global.exceptions.NotFound()
+    }
+    return await Art.getList(arts)
+  }
+
 }
 Favor.init(
   {

@@ -33,21 +33,51 @@ router.get('/latest', new Auth().m, async (ctx, next) => {
   // ctx.body = ctx.auth.uid
 })
 
+router.get('/:index/next', new Auth().m, async (ctx) => {
+  const v = await new PositiveIntegerValidator().validate(ctx, {
+      id: 'index'
+  })
+  const index = v.get('path.index')
+  const data = await ClassicService.next(index, ctx.auth.uid)
+  ctx.body = data
+})
+
+router.get('/:index/previous', new Auth().m, async (ctx) => {
+  const v = await new PositiveIntegerValidator().validate(ctx, {
+      id: 'index'
+  })
+  const index = v.get('path.index')
+
+  const data = await ClassicService.previous(index, ctx.auth.uid)
+  ctx.body = data
+})
+
+
+router.get('/:type/:id', new Auth().m, async ctx=>{
+  const v = await new ClassicValidator().validate(ctx)
+  const id = v.get('path.id')
+  const type = parseInt(v.get('path.type'))
+
+  const data = await ClassicService.detail(id, type, ctx.auth.uid)
+  ctx.body = data
+})
+
 // 获取某一期详细信息
 router.get('/:type/:id/favor', new Auth().m, async ctx => {
   const v = await new ClassicValidator().validate(ctx)
   // const id = v.get('path.id')
   // const type = v.get('path.type')
   const { id, type } = ctx.params
+  const artDetail = await ClassicService.art(id, type, ctx.auth.uid)
+  ctx.body = {
+    fav_nums: artDetail.art.fav_nums,
+    like_status: artDetail.like_status
+  }
+})
 
-  const art = await ClassicService.getData(id, type)
-  // console.log(id, type)
-  await Favor.like(
-    id,
-    type,
-    ctx.auth.uid
-  )
-
+router.get('/favor', new Auth().m, async ctx => {
+  const uid = ctx.auth.uid
+  ctx.body = await ClassicService.favor(uid)
 })
 
 module.exports = router
