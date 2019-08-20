@@ -1,6 +1,7 @@
 const Router = require('koa-router')
-const router = Router({
-  prefix: 'v1/book'
+// const { PositiveIntegerValidator } = require('@validator')
+const router = new Router({
+  prefix: '/v1/book'
 })
 
 const { HotBook } = require('../../models/hot-book')
@@ -18,5 +19,9 @@ router.get('/hot_list', async (ctx, next) => {
 // node.js 中间层
 // 微服务
 // 雏形
+
+router.get('/:id/detail', async (ctx)=> {
+  // const v = await new PositiveIntegerValidator().validate(ctx)
+})
 
 module.exports = router

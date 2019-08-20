@@ -1,4 +1,8 @@
+// require('module-alias/register')
+
 const Koa = require('koa')
+const path = require('path')
+const static = require('koa-static')
 const parser = require('koa-bodyparser')
 const InitMananger = require('./core/init')
 const catchError = require('./middlewares/exception')
@@ -10,12 +14,9 @@ const app = new Koa()
 
 app.use(catchError)
 app.use(parser())
-InitMananger.initCore(app)
+app.use(static(path.join(__dirname, './static')))
 
-// const book = require('./api/v1/book')
-// const classic = require('./api/v1/classic')
-// app.use(book.routes())
-// app.use(classic.routes()) 
+InitMananger.initCore(app)
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`)

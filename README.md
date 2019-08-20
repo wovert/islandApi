@@ -194,7 +194,7 @@ vim server.ts
 ```
 
 ```sh
-yarn add axios basic-auth bcryptjs jsonwebtoken koa-bodyparser koa-router lodash mysql2 npm-check require-directory sequelize validator
+yarn add axios basic-auth bcryptjs jsonwebtoken koa-bodyparser koa-router lodash mysql2 npm-check require-directory sequelize validator module-alias
 ```
 
 ## 全局异常处理
