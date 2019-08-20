@@ -1,9 +1,19 @@
+const util = require('util')
+const axios = require('axios')
 const { Sequelize, Model, Op } = require('sequelize')
 const { sequelize } = require('../../core/db')
-const { Favor } = require('./favor')
 
 class Book extends Model {
-
+  constructor(id) {
+    super()
+    this.id = id
+  }
+  async detail() { 
+    // python
+    const url = util.format(global.config.yushu.detailUrl, this.id)
+    const detail = await axios.get(url)
+    return detail.data
+  }
 }
 Book.init(
   {
@@ -14,15 +24,11 @@ Book.init(
     fav_nums: {
       type: Sequelize.INTEGER,
       defaultValue: 0,
-    },
-    index: Sequelize.INTEGER, // sort
-    image: Sequelize.STRING,
-    author: Sequelize.STRING,
-    title: Sequelize.STRING
+    }
   },
   {
     sequelize,
-    tableName: 'hot_book'
+    tableName: 'book'
   }
 )
 

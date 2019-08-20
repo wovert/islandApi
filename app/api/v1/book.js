@@ -1,10 +1,11 @@
 const Router = require('koa-router')
-// const { PositiveIntegerValidator } = require('@validator')
+const { PositiveIntegerValidator } = require('@validator')
+const { HotBook } = require('@models/hot-book')
+const { Book } = require('@models/book')
+
 const router = new Router({
   prefix: '/v1/book'
 })
-
-const { HotBook } = require('../../models/hot-book')
 
 router.get('/hot_list', async (ctx, next) => {
   const books = await HotBook.getAll()
@@ -21,7 +22,9 @@ router.get('/hot_list', async (ctx, next) => {
 // 雏形
 
 router.get('/:id/detail', async (ctx)=> {
-  // const v = await new PositiveIntegerValidator().validate(ctx)
+  const v = await new PositiveIntegerValidator().validate(ctx)
+  const book = new Book(v.get('path.id'))
+  ctx.body = await book.detail()
 })
 
 module.exports = router
