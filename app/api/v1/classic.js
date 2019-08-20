@@ -65,9 +65,9 @@ router.get('/:type/:id', new Auth().m, async ctx=>{
 // 获取某一期详细信息
 router.get('/:type/:id/favor', new Auth().m, async ctx => {
   const v = await new ClassicValidator().validate(ctx)
-  // const id = v.get('path.id')
-  // const type = v.get('path.type')
-  const { id, type } = ctx.params
+  const id = v.get('path.id')
+  const type = v.get('path.type')
+  // const { id, type } = ctx.params // id, type 都是字符串类型
   const artDetail = await ClassicService.art(id, type, ctx.auth.uid)
   ctx.body = {
     fav_nums: artDetail.art.fav_nums,

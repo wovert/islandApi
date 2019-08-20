@@ -24,10 +24,12 @@ class TokenValidator extends LinValidator {
   }
 
   validateLoginType(vals) {
-    if (!vals.body.type) {
+    let type = vals.body.type
+    if (!type) {
       throw new Error("type是必须参数");
     }
-    if (!LoginType.isThisType(vals.body.type)) {
+    type = parseInt(type)
+    if (!LoginType.isThisType(type)) {
       throw new Error("type参数不合法");
     }
 

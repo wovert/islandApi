@@ -144,6 +144,22 @@ Page({
       }
     })
   },
+  onLikeBook() {
+    wx.request({
+      url: 'http://localhost:3000/v1/like',
+      method: 'POST',
+      data: {
+        art_id: 1120,
+        type: 400
+      },
+      success: res => {
+        console.log(res.data)
+      },
+      header: {
+        Authorization: this._encode()
+      }
+    })
+  },
 
   onDisLike() {
     wx.request({

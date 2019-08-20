@@ -71,7 +71,7 @@ class Favor extends Model {
       where: {
         uid,
         type:{
-          [Op.not]: 400,
+          [Op.not]: 400 // type!=400
         }
       }
     })
