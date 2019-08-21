@@ -7,7 +7,9 @@ const {
 const { HotBook } = require('@models/hot-book')
 const { Book } = require('@models/book')
 const { Favor } = require('@models/favor')
+const { Comment } = require('@models/book-comment')
 const { Auth } = require('../../../middlewares/auth')
+const { success } = require('../../lib/helper')
 
 const router = new Router({
   prefix: '/v1/book'
@@ -63,6 +65,8 @@ router.post('/add/short_comment', new Auth().m, async ctx => {
   const v = await new AddShortCommentValidator().validate(ctx, {
     id: 'book_id'
   })
+  await Comment.addComment(v.get('body.book_id'), v.get('body.content'))
+  success()
 
 })
 
