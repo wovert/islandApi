@@ -67,9 +67,37 @@ router.post('/add/short_comment', new Auth().m, async ctx => {
   })
   await Comment.addComment(v.get('body.book_id'), v.get('body.content'))
   success()
-
 })
 
 // 获取书籍短评
+router.get('/:book_id/short_comment', new Auth().m, async ctx => {
+  const v = await new PositiveIntegerValidator().validate(ctx, {
+    id: 'book_id'
+  })
+  const book_id = v.get('path.book_id')
+  const comments = await Comment.getComments(book_id)
+  ctx.body = {
+    comments,
+    book_id
+  }
+})
+
+router.get("/hot_keyword", async ctx => {
+  ctx.body = {
+    hot: [
+      "Python",
+      "哈利·波特",
+      "村上春树",
+      "东野圭吾",
+      "白夜行",
+      "韩寒",
+      "金庸",
+      "王小波"
+    ]
+  }
+  // 搜索次数最多
+  // 一部分参考算法，人工编辑
+  // Lin-CMS，编辑热门关键字的功能
+})
 
 module.exports = router

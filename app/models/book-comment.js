@@ -2,8 +2,12 @@ const { Sequelize, Model, Op } = require('sequelize')
 const { sequelize } = require('../../core/db')
 
 class Comment extends Model {
-  constructor() {
+  constructor(values) {
     super()
+    this.id = values.id
+    this.book_id = values.book_id
+    this.content = values.content
+    this.nums = values.nums
   }
 
   static async addComment(book_id, content) {
@@ -11,40 +15,54 @@ class Comment extends Model {
       where: {
         book_id,
         content
-      }
+      },
+      attributes: ['id', 'nums', 'book_id']
     })
     if (!comment) {
       return await Comment.create({
-        book_id: book_id,
-        content: content,
-        nums: 1
+        nums: 1,
+        book_id,
+        content
       })
     } else {
       return await comment.increment('nums', {
-        by: 1
+        by: 1,
+        where: comment.id
       })
     }
   }
   
-  static async getComments(bookId) {
+  static async getComments(book_id) {
     const comments = await Comment.findAll({
       where: {
-        book_id: bookId
+        book_id
       }
     })
     return comments
   }
 }
 
-Comment.prototype.exclude = ['book_id', 'id']
+// Comment.prototype.exclude = ['book_id', 'id']
 
 Comment.init({
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+    allowNull: false
+  },
+  content: {
+    type: Sequelize.STRING(12),
+    allowNull: false
+  },
+  book_id: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
   nums: {
     type: Sequelize.INTEGER,
     defaultValue: 0
   },
-  content: Sequelize.STRING(12),
-  book_id: Sequelize.INTEGER
   // exclude:['book_id','id']
 }, {
   sequelize,

@@ -14,7 +14,7 @@ const sequelize = new Sequelize(dbName, user, password, {
     createdAt: 'created_at',
     updatedAt: 'updated_at',
     deletedAt: 'deleted_at',
-    underscored: true, // 数据库名是否
+    underscored: true, // 字段以下划线（_）来分割（默认是驼峰命名风格）
     freezeTableName: true,
     scopes: {
       bh: {
@@ -31,30 +31,30 @@ sequelize.sync({
 })
 
 
-Model.prototype.toJSON = function() {
-  // let data = this.dataValues
-  let data = clone(this.dataValues)
-  unset(data, 'updated_at')
-  unset(data, 'created_at')
-  unset(data, 'deleted_at')
+// Model.prototype.toJSON = function() {
+//   // let data = this.dataValues
+//   let data = clone(this.dataValues)
+//   unset(data, 'updated_at')
+//   unset(data, 'created_at')
+//   unset(data, 'deleted_at')
 
-  for (key in data) {
-    if (key === 'image') {
-      if (!data[key].startsWith('http'))
-        data[key] = global.config.host + data[key]
-    }
-  }
+//   for (key in data) {
+//     if (key === 'image') {
+//       if (!data[key].startsWith('http'))
+//         data[key] = global.config.host + data[key]
+//     }
+//   }
 
-  if (isArray(this.exclude)) {
-    this.exclude.forEach(value => {
-      unset(data, value)
-    });
-  }
-  // this.exclude
-  // exclude
-  // a,b,c,d,e
-  return data
-}
+//   if (isArray(this.exclude)) {
+//     this.exclude.forEach(value => {
+//       unset(data, value)
+//     });
+//   }
+//   // this.exclude
+//   // exclude
+//   // a,b,c,d,e
+//   return data
+// }
 
 module.exports = {
   sequelize
