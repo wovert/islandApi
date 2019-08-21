@@ -2,13 +2,20 @@ const { Sequelize, Model, Op } = require('sequelize')
 const { sequelize } = require('../../core/db')
 
 class Comment extends Model {
-  constructor(values) {
-    super()
-    this.id = values.id
-    this.book_id = values.book_id
-    this.content = values.content
-    this.nums = values.nums
-  }
+  // constructor(values) {
+  //   super()
+  //   this.id = values.id
+  //   this.book_id = values.book_id
+  //   this.content = values.content
+  //   this.nums = values.nums
+  // }
+
+  // toJSON() {
+  //   return {
+  //     content: this.getDataValue('content'),
+  //     nums: this.getDataValue('nums')
+  //   }
+  // }
 
   static async addComment(book_id, content) {
     const comment = await Comment.findOne({
@@ -16,7 +23,7 @@ class Comment extends Model {
         book_id,
         content
       },
-      attributes: ['id', 'nums', 'book_id']
+      // attributes: ['id', 'nums', 'book_id']
     })
     if (!comment) {
       return await Comment.create({
@@ -42,7 +49,7 @@ class Comment extends Model {
   }
 }
 
-// Comment.prototype.exclude = ['book_id', 'id']
+Comment.prototype.exclude = ['book_id', 'id']
 
 Comment.init({
   id: {

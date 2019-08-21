@@ -239,3 +239,8 @@ console.log(0/0) // NaN
 
 - Python: requests, BF4, Scrapy
 - node.js 正则表达式
+
+## typeorm
+
+> JavaScript ORM
+
