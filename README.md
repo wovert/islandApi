@@ -235,3 +235,7 @@ console.log(0/0) // NaN
 
 微服务解决架构问题，不能解决负载问题
 
+## 爬虫
+
+- Python: requests, BF4, Scrapy
+- node.js 正则表达式
