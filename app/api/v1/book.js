@@ -17,7 +17,7 @@ const router = new Router({
 
 router.get('/hot_list', async (ctx, next) => {
   const books = await HotBook.getAll()
-  ctx.body = { books }
+  ctx.body = books
 })
 
 // 图书基础数据 服务形式：API/项目，公用性，API 公开
@@ -32,8 +32,8 @@ router.get('/hot_list', async (ctx, next) => {
 // 书籍详情
 router.get('/:id/detail', async (ctx)=> {
   const v = await new PositiveIntegerValidator().validate(ctx)
-  const book = new Book(v.get('path.id'))
-  ctx.body = await book.detail()
+  const book = new Book()
+  ctx.body = await book.detail(v.get('path.id'))
 })
 
 // 搜索数据

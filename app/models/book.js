@@ -5,13 +5,13 @@ const { sequelize } = require('../../core/db')
 const { Favor } = require('@models/favor')
 
 class Book extends Model {
-  constructor(id) {
-    super()
-    this.id = id
-  }
-  async detail() { 
+  // constructor(id) {
+  //   super()
+  //   this.id = id
+  // }
+  async detail(id) { 
     // python
-    const url = util.format(global.config.yushu.detailUrl, this.id)
+    const url = util.format(global.config.yushu.detailUrl, id)
     const detail = await axios.get(url)
     return detail.data
   }

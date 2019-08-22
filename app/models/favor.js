@@ -27,8 +27,11 @@ class Favor extends Model {
         uid
       }, { transaction: t })
       
-      const art = await Art.getData(art_id, type)
-      await art.increment('fav_nums', {by: 1, transaction: t}) // 累加
+      const art = await Art.getData(art_id, type, false)
+      await art.increment('fav_nums', {
+        by: 1,
+        transaction: t
+      }) // 累加
     })
   }
 
@@ -44,14 +47,17 @@ class Favor extends Model {
       throw new global.exceptions.DislikeError()
     }
 
-    sequelize.transaction(async t => {
+    return sequelize.transaction(async t => {
       await favor.destroy({
         force: true, // false: 软删除，更新deleted_at 字段; true: 硬删除
         transaction: t
       })
       
-      const art = await Art.getData(art_id, type)
-      await art.decrement('fav_nums', {by: 1, transaction: t}) // 减一
+      const art = await Art.getData(art_id, type, false)
+      await art.decrement('fav_nums', {
+        by: 1,
+        transaction: t
+      }) // 减一
     })
   }
 
@@ -71,7 +77,7 @@ class Favor extends Model {
       where: {
         uid,
         type:{
-          [Op.not]: 400 // type!=400
+          [Op.not]: 400, // type!=400
         }
       }
     })

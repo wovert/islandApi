@@ -22,7 +22,7 @@ router.get('/latest', new Auth().m, async (ctx, next) => {
   // const id = v.get('path.id', parsed=false)
   // const x = v.get('body.b.e.x', parsed=false)
 
-  const data = await ClassicService.latest()
+  const data = await ClassicService.latest(ctx.auth.uid)
   ctx.body = data
 
   // 权限

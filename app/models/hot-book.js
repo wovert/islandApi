@@ -27,9 +27,9 @@ class HotBook extends Model {
     const favors = await Favor.findAll({
       where: {
         art_id: {
-          [Op.in]: ids,
-          type: 400
-        }
+          [Op.in]: ids
+        },
+        type: 400
       },
       group: ['art_id'],
       attributes: ['art_id', [Sequelize.fn('COUNT', '*'), 'count']]
@@ -48,7 +48,7 @@ class HotBook extends Model {
         count = favor.get('count')
       }
     })
-    book.setDataValue('count', count)
+    book.setDataValue('fav_nums', count)
     return book
   }
 }
