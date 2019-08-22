@@ -244,3 +244,12 @@ console.log(0/0) // NaN
 
 > JavaScript ORM
 
+## github
+
+> gitpage 300mb
+
+## vue/react 用途
+
+- **CMS**: 内部 SEO
+- WebApp: H5
+- 服务端模板渲染: PHP/Java
