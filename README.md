@@ -253,3 +253,13 @@ console.log(0/0) // NaN
 - **CMS**: 内部 SEO
 - WebApp: H5
 - 服务端模板渲染: PHP/Java
+
+## 双令牌
+
+- access_token 验证身份
+- refresh_token 刷新令牌，避免用户重新刷新，输入账号和密码
+  - access_token 过期了，就拿refresh_token 获取access_token令牌
+  - refresh_token 过期了，怎么办？
+    - 每次access_token的是偶，refresh_token也进行延长
+
+access_token 有效期 2个小时，refresh_token有效期1个月。用户第一次登录之后，access_token过期了，就拿refresh_token重新获取access_token令牌。在refersh_token合法的情况下，就签发新的access_token令牌。这个access_token有效期依然是2个小时，那个，refersh_token自身也刷新有效期为1个月。用户在1个月内访问API，他的永久访问权限又延续一个月。超过1个月没用过refresh_token并不能保证无感知登录。这是需要输入账号和密码。
