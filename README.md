@@ -263,3 +263,17 @@ console.log(0/0) // NaN
     - 每次access_token的是偶，refresh_token也进行延长
 
 access_token 有效期 2个小时，refresh_token有效期1个月。用户第一次登录之后，access_token过期了，就拿refresh_token重新获取access_token令牌。在refersh_token合法的情况下，就签发新的access_token令牌。这个access_token有效期依然是2个小时，那个，refersh_token自身也刷新有效期为1个月。用户在1个月内访问API，他的永久访问权限又延续一个月。超过1个月没用过refresh_token并不能保证无感知登录。这是需要输入账号和密码。
+
+## 部署
+
+1. 购买云服务器
+2. 注册域名
+3. 备案：host.com => ip
+4. 域名解析
+5. 安装软件环境：Node, MySQL, Nginx
+6. 运行程序: http://127.0.0.1:3000/v1/classic
+7. nginx 反向代理：http://host.com => http://127.0.0.1:3000
+
+https => lets encrypt, 3个月续期
+
+不需要域名备案，使用云开发（没有CMS）
